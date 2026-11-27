@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "emanet-web",
+  // The 2earl Cloudflare account. An identifier, not a credential; deploys need only the token.
+  "account_id": "304c2b77d734c688c8309d5a535f561a",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+
+  // Served at https://emanet.dev: the custom domain is 2earl/emanet-core's infra/worker.tf
+  // (web_live), attached once this Worker exists.
+  "workers_dev": false,
+  "preview_urls": false,
+
+  // No visitor is logged: the site keeps nothing about who reads it.
+  "observability": {
+    "enabled": false,
+  },
+
+  "vars": {
+    "SITE_ORIGIN": "https://emanet.dev",
+  },
+
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+  },
+
+  // 2earl's company details, as the legal pages must name them (emanet-core PublicApi).
+  "services": [{ "binding": "CORE", "service": "emanet-core", "entrypoint": "PublicApi" }],
+}

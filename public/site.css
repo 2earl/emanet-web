@@ -1,0 +1,544 @@
+/* emanet.dev. One strong element, the case card with its plate and its four steps; the rest
+   is plain, tabular and quiet, like the apps it leads to. */
+
+:root {
+  --ink: #15171b;
+  --muted: #59616d;
+  --rule: #d9dde2;
+  --paper: #ffffff;
+  --ground: #f2f3f5;
+  --action: #b8321a; /* 2earl vermilion, darkened for white text (AA) */
+  --action-ink: #ffffff;
+  --good: #1f7a4d;
+  --plate-blue: #003399;
+  --focus: #1a56db;
+  --measure: 72rem;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Noto Sans',
+    sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  background: var(--paper);
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--focus);
+  z-index: 10;
+}
+
+.skip:focus {
+  top: 0.5rem;
+}
+
+/* ---- Header and footer ---- */
+
+.top,
+.foot {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 1rem clamp(1rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 750;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.brand svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.brand.small {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.brand.small svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.top nav {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.top nav a {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.top nav a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.foot {
+  border-top: 1px solid var(--rule);
+  align-items: flex-start;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.foot p {
+  margin: 0 0 0.35rem;
+  max-width: 34rem;
+}
+
+.foot nav {
+  display: grid;
+  gap: 0.35rem;
+}
+
+main {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
+}
+
+/* ---- Buttons ---- */
+
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.2rem;
+  border-radius: 6px;
+  background: var(--action);
+  color: var(--action-ink);
+  font-weight: 650;
+  text-decoration: none;
+  border: 2px solid var(--action);
+}
+
+.button:hover {
+  background: #9c2914;
+  border-color: #9c2914;
+}
+
+.button.ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: #b8bec6;
+}
+
+.button.ghost:hover {
+  border-color: var(--ink);
+}
+
+/* ---- Front page ---- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  padding: clamp(2rem, 6vw, 5rem) 0 clamp(3rem, 7vw, 6rem);
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5.2vw, 3.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  margin: 0 0 1.25rem;
+  max-width: 14em;
+}
+
+.lede {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 38rem;
+  margin: 0 0 1.75rem;
+}
+
+.ctas {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+/* The case card: a real case's four steps, the plate on top. */
+.case {
+  margin: 0;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 1.5rem 1.5rem 1.25rem;
+  box-shadow:
+    0 1px 0 var(--rule),
+    0 18px 40px -24px rgb(21 23 27 / 35%);
+}
+
+.case figcaption {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.9rem;
+}
+
+.plate {
+  display: inline-flex;
+  align-items: stretch;
+  margin: 0 0 1.5rem;
+  border: 3px solid #111;
+  border-radius: 6px;
+  background: #fff;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.plate::before {
+  content: 'TR';
+  display: flex;
+  align-items: flex-end;
+  padding: 0.5em 0.35em 0.25em;
+  background: var(--plate-blue);
+  color: #fff;
+  font-size: 0.42em;
+  letter-spacing: 0;
+}
+
+.plate span {
+  padding: 0.3em 0.55em;
+}
+
+.journey {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.journey li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: 1.1rem;
+  padding: 0 0 1rem 0;
+  position: relative;
+}
+
+/* The line between the steps, and a dot on each. */
+.journey li::before {
+  content: '';
+  position: absolute;
+  left: calc(3.5rem + 0.2rem);
+  top: 0.5rem;
+  bottom: -0.5rem;
+  width: 2px;
+  background: var(--rule);
+}
+
+.journey li:last-child::before {
+  display: none;
+}
+
+.journey li::after {
+  content: '';
+  position: absolute;
+  left: calc(3.5rem - 0.05rem);
+  top: 0.38rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid #8a929d;
+}
+
+.journey li.done::after {
+  background: var(--good);
+  border-color: var(--good);
+}
+
+.journey time {
+  grid-row: span 2;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.journey strong,
+.journey span {
+  padding-left: 1rem;
+}
+
+.journey span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.journey li.done strong {
+  color: var(--good);
+}
+
+.fee {
+  margin: 0.25rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--rule);
+  font-weight: 600;
+}
+
+.how,
+.audiences,
+.rules {
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+  border-top: 1px solid var(--rule);
+}
+
+h2 {
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 1.5rem;
+}
+
+.how ol {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.how li {
+  counter-increment: step;
+}
+
+.how li::before {
+  content: counter(step);
+  display: block;
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--action);
+  margin-bottom: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.how h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.how p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.audiences ul,
+.rules ul {
+  margin: 0 0 1.5rem;
+  padding-left: 1.1rem;
+}
+
+.audiences li,
+.rules li {
+  margin-bottom: 0.5rem;
+}
+
+.rules {
+  background: var(--ground);
+  border-top: none;
+  margin: 0 calc(-1 * clamp(1rem, 4vw, 2.5rem));
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
+}
+
+.rules ul {
+  columns: 2 22rem;
+  column-gap: 3rem;
+  font-size: 1.05rem;
+}
+
+.rules li {
+  break-inside: avoid;
+}
+
+.contact {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+}
+
+.contact p {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+/* ---- Legal pages ---- */
+
+.doc {
+  max-width: 48rem;
+  padding: clamp(2rem, 5vw, 3.5rem) 0 4rem;
+}
+
+.doc h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+
+.doc h2 {
+  font-size: 1.25rem;
+  margin: 2.5rem 0 0.75rem;
+  scroll-margin-top: 1rem;
+}
+
+.doc p,
+.doc li {
+  max-width: 44rem;
+}
+
+.doc .lede {
+  font-size: 1.08rem;
+}
+
+.updated {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.toc {
+  background: var(--ground);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.toc ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  columns: 2 16rem;
+}
+
+.table {
+  overflow-x: auto;
+  margin: 0 0 1rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+thead th {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 2px solid var(--rule);
+}
+
+tbody th {
+  font-weight: 600;
+}
+
+dl.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+  margin: 0 0 1rem;
+}
+
+dl.facts dt {
+  color: var(--muted);
+}
+
+dl.facts dd {
+  margin: 0;
+}
+
+/* ---- Small screens ---- */
+
+@media (max-width: 52rem) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .how ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .audiences {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 30rem) {
+  .how ol {
+    grid-template-columns: 1fr;
+  }
+
+  dl.facts {
+    grid-template-columns: 1fr;
+  }
+
+  dl.facts dd {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

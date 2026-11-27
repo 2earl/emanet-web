@@ -1,0 +1,68 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never run two deploys at once; never cancel one that has started.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # Secrets live only in this environment: deploys from main only, each run approved by the owner.
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Test before deploying
+        run: pnpm test
+
+      - name: Deploy Worker
+        run: pnpm exec wrangler deploy
+
+      # Up to five minutes, so the first deployment can attach emanet.dev meanwhile (emanet-core
+      # infra/, web_live). A Cloudflare challenge to GitHub's runner ends the check at once.
+      - name: Smoke test
+        env:
+          URL: https://emanet.dev/healthz
+          EXPECT: '"status":"ok"'
+        run: |
+          set -uo pipefail
+          for i in $(seq 1 30); do
+            code=$(curl -sS -o "$RUNNER_TEMP/body" -D "$RUNNER_TEMP/headers" -w '%{http_code}' --max-time 10 "$URL" || true)
+            if [ "$code" = 200 ] && grep -q "$EXPECT" "$RUNNER_TEMP/body"; then
+              echo "healthy"; exit 0
+            fi
+            if grep -qi '^cf-mitigated:' "$RUNNER_TEMP/headers" 2>/dev/null; then
+              echo "::warning::Cloudflare challenged the runner (HTTP $code), so $URL couldn't be checked from here. Open it in a browser."
+              exit 0
+            fi
+            echo "attempt $i: HTTP $code"
+            sleep 10
+          done
+          echo "::warning::$URL is not answering yet: set web_live = true in 2earl/emanet-core infra/variables.tf and approve the infra run"

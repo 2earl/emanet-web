@@ -11,9 +11,13 @@
   "workers_dev": false,
   "preview_urls": false,
 
-  // No visitor is logged: the site keeps nothing about who reads it.
+  // Errors and timings in Cloudflare (logs, traces, Issues), without invocation logs: no visitor's
+  // address or the page they read is recorded.
   "observability": {
-    "enabled": false,
+    "enabled": true,
+    "logs": { "enabled": true, "invocation_logs": false, "head_sampling_rate": 1 },
+    "traces": { "enabled": true, "head_sampling_rate": 0.1 },
+    "issues": { "enabled": true },
   },
 
   "vars": {

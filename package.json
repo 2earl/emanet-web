@@ -20,14 +20,14 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
-    "@cloudflare/vitest-plugin": "1.9.1",
+    "@cloudflare/vitest-plugin": "1.9.2",
     "@eslint/js": "10.0.1",
     "eslint": "10.15.0",
     "prettier": "3.10.1",
     "typescript": "6.0.3",
     "typescript-eslint": "8.74.0",
-    "vitest": "5.1.1",
-    "wrangler": "4.167.0"
+    "vitest": "5.1.2",
+    "wrangler": "4.168.0"
   },
   "dependencies": {
     "hono": "4.13.21"

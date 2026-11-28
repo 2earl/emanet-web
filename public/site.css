@@ -976,3 +976,46 @@ p {
     --sunken: #10161d;
   }
 }
+
+/* ---- Questions and contact ---- */
+
+.faq {
+  max-width: 48rem;
+  padding: clamp(2rem, 5vw, 3rem) 0 0;
+}
+
+.faq details {
+  border-top: 1px solid var(--rule);
+  padding: 0.9rem 0;
+}
+
+.faq details:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.faq details p {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  max-width: 42rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 2rem;
+}
+
+.contact-grid h3 {
+  margin-top: 0;
+}
+
+.contact-grid p {
+  font-size: 1.05rem;
+  margin: 0 0 0.8rem;
+}

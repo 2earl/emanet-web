@@ -462,7 +462,7 @@ h2 {
   font-weight: 800;
   font-size: 2.2rem;
   line-height: 1;
-  color: var(--action);
+  color: var(--link);
   margin-bottom: 0.75rem;
   font-variant-numeric: tabular-nums;
 }
@@ -788,7 +788,7 @@ p {
   padding: 0.6rem;
   border-radius: 10px;
   background: var(--tint, #e3eef1);
-  color: var(--action);
+  color: var(--link);
 }
 
 .trust strong {
@@ -869,7 +869,7 @@ p {
   margin-bottom: 1rem;
   border-radius: 12px;
   background: var(--tint, #e3eef1);
-  color: var(--action);
+  color: var(--link);
 }
 
 .aud-icon .icon {
@@ -921,7 +921,7 @@ p {
 .dev h2 .icon {
   width: 1.6rem;
   height: 1.6rem;
-  color: var(--action);
+  color: var(--link);
 }
 
 .dev p {
@@ -1018,4 +1018,405 @@ p {
 .contact-grid p {
   font-size: 1.05rem;
   margin: 0 0 0.8rem;
+}
+
+/* ==================================================================================================
+ * 2earl theme v1 (2026-11-28). The official theme of every 2earl site: claude/2EARL_THEME.md in the
+ * project and the "2earl" design system. Warm neutrals, the mark's four facets as the brand, one
+ * vermilion button for the next step, Readex Pro for headings, the device's own font for text.
+ * Emanet keeps one thing of its own: the licence plate, in its plate face.
+ *
+ * The first :root block is the theme, copied verbatim; change it there first, then here.
+ * ================================================================================================ */
+
+@font-face {
+  font-family: 'Readex Pro';
+  src: url('/fonts/readex-pro-latin.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --red: #ed1c24;
+  --vermilion: #f15a24;
+  --orange: #f7931e;
+  --amber: #fbb03b;
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #efeef1;
+  --fg: #1c1b1f;
+  --muted: #5c5a60;
+  --rule: #e2e1e5;
+  --field: #8f8c95;
+  --link: #b23a0c;
+  --focus: #b23a0c;
+  --action: #f15a24;
+  --action-hover: #f7931e;
+  --action-fg: #1c1b1f;
+  --good: #1a7048;
+  --wait: #8a5200;
+  --alert: #c8141b;
+  --info: #1f5fa8;
+  --good-tint: #e6f3ec;
+  --wait-tint: #fbf0dc;
+  --alert-tint: #fbe9e9;
+  --info-tint: #e7eff8;
+  --brand-tint: #fdeee7;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --target: 2.75rem;
+  --band: 0.375rem;
+  --shadow-card: 0 1px 2px rgb(28 27 31 / 6%), 0 8px 24px -12px rgb(28 27 31 / 18%);
+  --display: 'Readex Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  accent-color: var(--vermilion);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141315;
+    --surface: #1c1b1f;
+    --surface-2: #232126;
+    --fg: #f2f1f3;
+    --muted: #a19fa6;
+    --rule: #2c2a2f;
+    --field: #6f6c75;
+    --link: #fbb03b;
+    --focus: #fbb03b;
+    --good: #5fcf9a;
+    --wait: #fbb03b;
+    --alert: #ff7a6b;
+    --info: #8ab8f0;
+    --good-tint: #1b2b25;
+    --wait-tint: #2f2718;
+    --alert-tint: #33201f;
+    --info-tint: #1d2733;
+    --brand-tint: #2e211c;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 40%), 0 12px 28px -14px rgb(0 0 0 / 70%);
+  }
+}
+
+/* Emanet's older names, pointed at the theme, so every rule above follows it. */
+:root {
+  --ground: var(--bg);
+  --paper: var(--surface);
+  --sunken: var(--surface-2);
+  --ink: var(--fg);
+  --action-ink: var(--action-fg);
+  --tint: var(--brand-tint);
+  --brand: var(--link);
+  --danger: var(--alert);
+  --off: var(--muted);
+  --radius: var(--radius-lg);
+  --shadow: 0 1px 2px rgb(28 27 31 / 5%);
+  /* Text on a filled status colour (a green step marker): white in light, ink in dark. */
+  --on-status: #ffffff;
+  --plate-face: 'Barlow Semi Condensed', 'Arial Narrow', system-ui, sans-serif;
+  font-family: var(--body);
+  font-size: 100%;
+  line-height: 1.55;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --on-status: #1c1b1f;
+    --shadow: none;
+  }
+}
+
+/* The four facets in the mark's order, along the top edge of every page. */
+body::before {
+  content: '';
+  display: block;
+  height: var(--band);
+  background: linear-gradient(
+    90deg,
+    var(--red) 0 25%,
+    var(--vermilion) 25% 50%,
+    var(--orange) 50% 75%,
+    var(--amber) 75%
+  );
+}
+
+@media print {
+  body::before {
+    display: none;
+  }
+}
+
+a {
+  color: var(--link);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* One filled button says what to do next; the rest are outlined. */
+button,
+.button {
+  min-height: var(--target);
+  border-radius: var(--radius-md);
+  font-family: var(--body);
+}
+
+button.secondary,
+.button.secondary,
+.button.ghost {
+  border-color: var(--field);
+}
+
+button.link {
+  min-height: 0;
+  color: var(--link);
+}
+
+/* A destructive action is outlined, never filled, and sits behind a second step. */
+button.danger,
+.button.danger {
+  background: var(--surface);
+  border: 2px solid var(--alert);
+  color: var(--alert);
+}
+
+button.danger:hover,
+.button.danger:hover {
+  background: var(--alert-tint);
+}
+
+/* A field's edge is visible on its own (3:1), and its text never makes a phone zoom. */
+input:not([type='checkbox'], [type='radio'], [type='file'], [type='hidden']),
+select,
+textarea {
+  min-height: var(--target);
+  border-color: var(--field);
+  border-radius: var(--radius-md);
+  font-size: max(1rem, 16px);
+}
+
+input:not([type='checkbox'], [type='radio'], [type='file'], [type='hidden']):focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--link);
+}
+
+input[aria-invalid='true'],
+select[aria-invalid='true'],
+textarea[aria-invalid='true'] {
+  border: 2px solid var(--alert);
+  box-shadow: none;
+}
+
+/* A status is a word on a tinted pill: the colour supports the word. */
+.status {
+  padding: 0.2rem 0.65rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font: 500 0.8125rem/1.4 var(--body);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.status.active,
+.status.paid,
+.status.approved,
+.status.sent,
+.status.delivered,
+.status.done {
+  background: var(--good-tint);
+  color: var(--good);
+}
+
+.status.invited,
+.status.applied,
+.status.kyc_pending,
+.status.issued,
+.status.ready,
+.status.awaiting_receipt,
+.status.in_progress,
+.status.pending_identity,
+.status.pending,
+.status.open,
+.status.signed,
+.status.due {
+  background: var(--wait-tint);
+  color: var(--wait);
+}
+
+.status.suspended,
+.status.banned,
+.status.rejected,
+.status.failed,
+.status.refused,
+.status.overdue,
+.status.expired.soon {
+  background: var(--alert-tint);
+  color: var(--alert);
+}
+
+.notice {
+  background: var(--good-tint);
+}
+
+.error {
+  background: var(--alert-tint);
+}
+
+/* Emanet's own element: the licence plate keeps its plate face. */
+.plate {
+  font-family: var(--plate-face);
+}
+
+/* Amounts line up in tables. */
+td.num,
+th.num,
+.earn {
+  font-variant-numeric: tabular-nums;
+}
+
+.panel,
+.card,
+.step {
+  border-radius: var(--radius-lg);
+}
+
+/* The card holding the current task is the only one that lifts. */
+.step.now {
+  border-color: var(--vermilion);
+  box-shadow: var(--shadow-card);
+}
+
+.step.done h2::before {
+  color: var(--on-status);
+}
+
+ol.flow li:last-child::before,
+ol.tracker li.done > .icon,
+.method.post {
+  color: var(--on-status);
+}
+
+.bar nav a[aria-current='page'] {
+  color: var(--link);
+}
+
+/* Step numbers: neutral until it is that step's turn; only the current one takes the brand. */
+.step h2::before {
+  background: var(--surface-2);
+  color: var(--fg);
+}
+
+.step.now h2::before {
+  background: var(--action);
+  color: var(--action-fg);
+}
+
+.step.done h2::before {
+  background: var(--good);
+  color: var(--on-status);
+}
+
+/* A thread, then its reply form, then the quieter way out. */
+ul.cards + form,
+ul.cards + .error + form {
+  margin-top: 1.25rem;
+}
+
+form.stack + form {
+  margin-top: 1rem;
+}
+
+/* On a phone a wide table scrolls inside its own box; the page never scrolls sideways. */
+@media (max-width: 40rem) {
+  table:not(.cases) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* A search: the field and its button on one baseline, clear of what follows. */
+form.search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+}
+
+form.search label {
+  flex: 1 1 16rem;
+  max-width: 28rem;
+}
+
+/* The cases table on a phone: each case is a row of pairs (plate and status, vehicle and fee,
+   reference and expiry) across the full width. */
+@media (max-width: 40rem) {
+  table.cases,
+  table.cases tbody {
+    display: block;
+  }
+
+  table.cases tr {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'plate status' 'vehicle fee' 'ref expires';
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  table.cases tr:last-child {
+    border-bottom: 0;
+  }
+
+  table.cases td {
+    padding-block: 0.3rem;
+  }
+
+  table.cases td:nth-child(1) {
+    grid-area: plate;
+  }
+
+  table.cases td:nth-child(2) {
+    grid-area: vehicle;
+  }
+
+  table.cases td:nth-child(3) {
+    grid-area: ref;
+    color: var(--muted);
+  }
+
+  table.cases td:nth-child(4) {
+    grid-area: status;
+    justify-self: end;
+  }
+
+  table.cases td:nth-child(5) {
+    grid-area: fee;
+    justify-self: end;
+  }
+
+  table.cases td:nth-child(6) {
+    grid-area: expires;
+    justify-self: end;
+    color: var(--muted);
+  }
 }

@@ -55,6 +55,10 @@ describe('emanet.dev', () => {
       'standart sözleşme',
       'otuz gün',
       'Kişisel Verileri Koruma Kurulu',
+      // What the field app collects and keeps must be written here too.
+      'adli sicil',
+      'Verilerim',
+      'şifrelenmiş ve erişimi kısıtlanmış',
     ]) {
       expect(privacy).toContain(words);
     }

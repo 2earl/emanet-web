@@ -67,9 +67,9 @@ export function privacy(c: Company): LegalPage {
             ],
             [
               'Saha görevlileri',
-              'Ad soyad, kimlik belgesi doğrulaması, telefon, kendi adına IBAN, vergi bilgileri; araç bildiriminde çekilen fotoğraflar ve o andaki konum; görev, ödeme ve işlem kayıtları',
-              'Başvuruyu değerlendirmek, kimliği doğrulamak, görev vermek, bildirimi ve teslimi belgelemek, ödeme yapmak, vergi ve muhasebe yükümlülükleri, kuralların uygulanması',
-              '(c) sözleşme; (ç) hukuki yükümlülük (vergi, muhasebe); (e) hakkın korunması; (f) meşru menfaat',
+              'Ad soyad, T.C. kimlik numarası (şifrelenmiş saklanır), doğum yılı, adres, telefon, kendi adına IBAN, vergi bilgileri; e-Devlet’ten alınan adli sicil (sabıka) kaydı belgesi ve nüfus kayıt örneği, istenirse yerleşim yeri belgesi, sürücü belgesi, vergi levhası ve IBAN belgesi; araç bildiriminde çekilen fotoğraflar ve o andaki konum; görev, ödeme ve işlem kayıtları',
+              'Başvuruyu değerlendirmek, kimliği ve güvenilirliği doğrulamak, görev vermek, bildirimi ve teslimi belgelemek, ödeme yapmak, vergi ve muhasebe yükümlülükleri, kuralların uygulanması',
+              '(c) sözleşme; (ç) hukuki yükümlülük (vergi, muhasebe); (e) hakkın korunması; (f) meşru menfaat; adli sicil belgesi için açık rıza (KVKK m. 6)',
             ],
             [
               'Aranan araçlarla ilgili kişiler (araç sahipleri, borçlular)',
@@ -87,7 +87,8 @@ export function privacy(c: Company): LegalPage {
         },
         p: [
           'Saha görevlilerine borçlunun adı, borcu veya alacaklının iç bilgileri hiçbir zaman gösterilmez; adresler yalnızca aracı üstlendikleri süre boyunca ve yalnızca o araç için gösterilir, her görüntüleme kayıt altına alınır. Saha görevlisinin konumu sürekli izlenmez; yalnızca bir aracı gördüğünü bildirdiği anda alınır.',
-          'Özel nitelikli kişisel veri (sağlık, din, ceza mahkûmiyeti vb.) işlemeyiz ve kurumlardan bu tür verileri Emanet’e girmemelerini isteriz.',
+          'Özel nitelikli kişisel veriyi yalnızca saha görevlisi adaylarının adli sicil belgesi bakımından ve açık rızalarıyla işleriz; belgeyi başvuru değerlendirmesi için kullanırız ve silme talebinde yok ederiz, arşive almayız. Sağlık, din gibi başka özel nitelikli verileri işlemeyiz; kurumlardan da bu tür verileri Emanet’e girmemelerini isteriz.',
+          'Saha görevlisi başvurusunu değerlendirirken sizden ek bilgi veya belge isteyebiliriz. İstek, nedeniyle birlikte size e-postayla bildirilir ve Emanet Saha’daki “Sizden beklenenler” sayfasında görünür; belgeleri e-postayla göndermemenizi isteriz.',
         ],
       },
       {
@@ -114,6 +115,7 @@ export function privacy(c: Company): LegalPage {
         h: '6. Saklama süresi',
         p: [
           'Verileri, işlendikleri amaç için gerekli olduğu süre ve ilgili mevzuattaki saklama süreleri boyunca (örneğin ticari defter ve belgeler için Türk Ticaret Kanunu m. 82 uyarınca 10 yıl, vergi kayıtları için Vergi Usul Kanunu m. 253 uyarınca 5 yıl) ve olası uyuşmazlıklar için zamanaşımı süreleri boyunca saklarız. Süre dolunca veriler Kişisel Verilerin Silinmesi, Yok Edilmesi veya Anonim Hale Getirilmesi Hakkında Yönetmelik uyarınca silinir, yok edilir veya anonim hale getirilir.',
+          'Saha görevlisi verilerinin silinmesini Emanet Saha’daki “Verilerim” sayfasından isteyebilirsiniz. Talep karara bağlanana kadar geri alınabilir. Silinen veri hesabınızdan ve çalışma ekranlarımızdan kaldırılır; ancak olası uyuşmazlıklarda hakkımızı ispatlayabilmek (KVKK m. 5/2-e) ve denetim için, kimlik, ödeme ve işlem kayıtlarının bir kopyası şifrelenmiş ve erişimi kısıtlanmış bir arşivde varsayılan olarak 10 yıl saklanır, süre sonunda yok edilir. Arşivi yalnızca yetkili yöneticiler, yazılı gerekçe ve ikinci doğrulamayla açabilir; her açılış kayıt altına alınır. Ödeme ve muhasebe kayıtları, silme talebinde de vergi ve ticaret mevzuatı gereği saklanır (VUK m. 253, TTK m. 82).',
           'Aranan araçlarla ilgili veriler, alacaklının talimatı ve aramızdaki sözleşme çerçevesinde; dosya kapandıktan sonra erişimi kısıtlanmış olarak saklanır ve sözleşme sona erdiğinde alacaklıya iade edilir veya silinir.',
         ],
       },
@@ -133,7 +135,7 @@ export function privacy(c: Company): LegalPage {
       {
         h: '8. Başvuru',
         p: [
-          `Haklarınıza ilişkin talebinizi, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ uyarınca; yazılı olarak ${c.address} adresine, kayıtlı elektronik posta (KEP) ile ${c.kep} adresine, güvenli elektronik imza veya mobil imza ile ya da sistemimizde kayıtlı e-posta adresinizden ${CONTACT} adresine iletebilirsiniz. Nasıl başvuracağınız ve başvuruda bulunması gerekenler: <a href="/kvkk-basvuru">KVKK başvurusu</a>.`,
+          `Haklarınıza ilişkin talebinizi, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ uyarınca; yazılı olarak ${c.address} adresine, kayıtlı elektronik posta (KEP) ile ${c.kep} adresine, güvenli elektronik imza veya mobil imza ile ya da sistemimizde kayıtlı e-posta adresinizden ${CONTACT} adresine iletebilirsiniz. Saha görevlileri silme talebini doğrudan Emanet Saha’daki “Verilerim” sayfasından da iletebilir. Nasıl başvuracağınız ve başvuruda bulunması gerekenler: <a href="/kvkk-basvuru">KVKK başvurusu</a>.`,
           'Başvurunuzu en kısa sürede ve en geç otuz gün içinde ücretsiz sonuçlandırırız; işlemin ayrıca bir maliyet gerektirmesi hâlinde Kurulca belirlenen tarifedeki ücret alınabilir. Başvurunuz reddedilir, yanıtı yetersiz bulunur veya süresinde yanıtlanmazsa Kişisel Verileri Koruma Kuruluna şikâyette bulunabilirsiniz (KVKK m. 14).',
         ],
       },

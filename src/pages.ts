@@ -46,6 +46,47 @@ export const MARK =
   '<path fill="#ED1C24" d="M50 7 66 23 50 39 34 23Z"/>' +
   '</svg>';
 
+/**
+ * JSON for a `<script type="application/ld+json">`: `<`, `>` and `&` escaped so no text in it
+ * can close the element. It is data, never run, so the site's CSP (no scripts) still holds.
+ */
+export function jsonLd(item: Record<string, unknown>): string {
+  return JSON.stringify(item)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+}
+
+/** Who runs the site, and its questions, for search engines (schema.org). */
+function frontData(lang: Lang, f: Front, company: Company): Record<string, unknown>[] {
+  const url = `https://emanet.dev${lang === 'tr' ? '/' : '/en'}`;
+  // The legal name only once staff have entered it, never the placeholder.
+  const legalName = company.name.startsWith('[') ? {} : { legalName: company.name };
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Emanet',
+      ...legalName,
+      url: 'https://emanet.dev/',
+      logo: 'https://emanet.dev/icon.svg',
+      email: CONTACT,
+      parentOrganization: { '@type': 'Organization', name: '2earl', url: 'https://2earl.com/' },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      url,
+      inLanguage: lang,
+      mainEntity: f.faq.map(([q, a]) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    },
+  ];
+}
+
 interface Meta {
   title: string;
   description: string;
@@ -53,6 +94,8 @@ interface Meta {
   lang: Lang;
   /** The same page in the other language, if there is one. */
   alternate?: { lang: Lang; path: string };
+  /** Structured data for search engines (schema.org), written as JSON-LD. */
+  jsonLd?: Record<string, unknown>[];
 }
 
 function layout(meta: Meta, body: string, company: Company): string {
@@ -75,6 +118,7 @@ ${alt ? `<link rel="alternate" hreflang="${meta.lang}" href="${url}"><link rel="
 <meta name="theme-color" content="#ffffff">
 <link rel="stylesheet" href="/site.css">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
+${(meta.jsonLd ?? []).map((item) => `<script type="application/ld+json">${jsonLd(item)}</script>`).join('\n')}
 </head>
 <body>
 <a class="skip" href="#main">${t ? 'İçeriğe geç' : 'Skip to content'}</a>
@@ -467,6 +511,7 @@ export function front(lang: Lang, company: Company): string {
       path: lang === 'tr' ? '/' : '/en',
       lang,
       alternate: lang === 'tr' ? { lang: 'en', path: '/en' } : { lang: 'tr', path: '/' },
+      jsonLd: frontData(lang, f, company),
     },
     body,
     company,

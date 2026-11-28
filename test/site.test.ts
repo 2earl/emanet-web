@@ -43,8 +43,28 @@ describe('emanet.dev', () => {
       expect(response.headers.get('Set-Cookie')).toBeNull();
       expect(response.headers.get('Content-Security-Policy')).toContain("default-src 'none'");
       expect(response.headers.get('Content-Security-Policy')).toContain("frame-ancestors 'none'");
-      expect(await response.text()).not.toContain('<script');
+      // Structured data is the only script element, and it is data, never run.
+      const html = await response.text();
+      expect(
+        html.replace(/<script type="application\/ld\+json">[^<]*<\/script>/g, ''),
+      ).not.toContain('<script');
     }
+  });
+
+  it('describes the organization and its questions for search engines', async () => {
+    const html = await (await get('/en')).text();
+    const blocks = [
+      ...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g),
+    ].map((m) => JSON.parse(m[1] ?? '{}') as Record<string, unknown>);
+    expect(blocks.map((b) => b['@type'])).toEqual(['Organization', 'FAQPage']);
+    expect(blocks[0]).toMatchObject({ name: 'Emanet', legalName: '2earl Teknoloji A.Ş.' });
+    const faq = blocks[1]?.mainEntity as { name: string; acceptedAnswer: { text: string } }[];
+    expect(faq.length).toBeGreaterThan(3);
+    expect(html).toContain(faq[0]?.name ?? 'missing');
+    await core().testSet(null);
+    const pending = await (await get('/')).text();
+    expect(pending).toContain('"@type":"FAQPage","url":"https://emanet.dev/","inLanguage":"tr"');
+    expect(pending).not.toContain('legalName');
   });
 
   it('names 2earl’s company in the privacy notice, the terms and the imprint', async () => {

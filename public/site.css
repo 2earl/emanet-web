@@ -746,3 +746,233 @@ p {
   background: #ffffff;
   color: #111418;
 }
+
+/* ==================================================================================================
+   Icons, a trust strip, audience cards and the developer section (2026-11-28)
+   ================================================================================================== */
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  vertical-align: -0.22em;
+}
+
+.scene {
+  width: 9rem;
+  height: auto;
+  display: block;
+}
+
+.trust {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  padding: 0 0 clamp(2rem, 5vw, 3.5rem);
+}
+
+.trust > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  padding: 1.1rem 1.2rem;
+  background: var(--paper, #fff);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+}
+
+.trust .icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  background: var(--tint, #e3eef1);
+  color: var(--action);
+}
+
+.trust strong {
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.trust span {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.how li {
+  position: relative;
+  padding: 1.3rem 1.2rem 1.4rem;
+  background: var(--paper, #fff);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+}
+
+.how li::before {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.2rem;
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--rule);
+}
+
+.how-icon {
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  margin-bottom: 0.9rem;
+  border-radius: 12px;
+  background: var(--action);
+  color: #fff;
+}
+
+.how-icon .icon {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.how ol {
+  gap: 1rem;
+}
+
+@media (max-width: 60rem) {
+  .how ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 34rem) {
+  .how ol {
+    grid-template-columns: 1fr;
+  }
+}
+
+.audiences {
+  gap: 1rem;
+}
+
+.audiences > div {
+  padding: clamp(1.4rem, 3vw, 2rem);
+  background: var(--paper, #fff);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+}
+
+.aud-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  background: var(--tint, #e3eef1);
+  color: var(--action);
+}
+
+.aud-icon .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.audiences ul,
+.rules ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.audiences li,
+.rules li {
+  position: relative;
+  padding-left: 1.7rem;
+}
+
+.audiences li::before,
+.rules li::before {
+  content: '';
+  position: absolute;
+  left: 0.1rem;
+  top: 0.45em;
+  width: 0.95rem;
+  height: 0.5rem;
+  border-left: 2.5px solid var(--good, #18794e);
+  border-bottom: 2.5px solid var(--good, #18794e);
+  transform: rotate(-45deg);
+}
+
+.dev {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.dev h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.dev h2 .icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--action);
+}
+
+.dev p {
+  color: var(--muted);
+  max-width: 34rem;
+}
+
+.dev pre {
+  margin: 0;
+  padding: 1.2rem 1.3rem;
+  overflow-x: auto;
+  border-radius: 14px;
+  background: #0f1720;
+  color: #e6edf3;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.rules-head {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.rules-head h2 {
+  margin: 0;
+}
+
+.rules-head .scene {
+  width: 5.5rem;
+}
+
+@media (max-width: 48rem) {
+  .audiences,
+  .dev {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The drawn scenes use these three; the apps define them in their own themes. */
+:root {
+  --tint: #e3eef1;
+  --brand: #c8371b;
+  --sunken: #f6f8fa;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tint: #16303a;
+    --sunken: #10161d;
+  }
+}

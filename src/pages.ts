@@ -1,5 +1,9 @@
 import { CONTACT, type Company } from './company';
 import { UPDATED, type Block, type LegalPage } from './legal';
+import { icon, scene, type IconName } from './icons';
+
+const HOW_ICONS: IconName[] = ['plus', 'search', 'phone', 'check'];
+const TRUST_ICONS: IconName[] = ['privacy', 'agents', 'lock'];
 
 /**
  * emanet.dev's pages, server-rendered, no scripts. Turkish first: Emanet works in Turkey under
@@ -125,6 +129,10 @@ interface Front {
   agentsCta: string;
   rulesH: string;
   rules: string[];
+  devH: string;
+  devText: string;
+  devCta: string;
+  trust: [string, string][];
   contact: string;
 }
 
@@ -179,6 +187,21 @@ const FRONT: Record<Lang, Front> = {
       'Başlamadan önce kimliğiniz ve banka hesabınız doğrulanır.',
     ],
     agentsCta: 'Emanet Saha’ya başvurun',
+    devH: 'Sistemlerinizle konuşur',
+    devText:
+      'Dosyaları API ile ekleyin, teslimleri webhook ile alın. OpenAPI belgesi Postman’e veya kod üretecinize doğrudan aktarılır.',
+    devCta: 'API başvurusu',
+    trust: [
+      ['Yalnızca kolluk yakalar', 'Görevli araca dokunmaz; aracı görür ve 112’yi arar.'],
+      [
+        'Kimliği doğrulanmış görevliler',
+        'E-posta, T.C. kimlik no, görüntülü görüşme ve kendi adına IBAN.',
+      ],
+      [
+        'Veriler AB’de, KVKK’ya uygun',
+        'Adresler yalnızca arama süresince görünür, dosya kapanınca silinir.',
+      ],
+    ],
     rulesH: 'Kurallarımız',
     rules: [
       'Kişi değil araç aranır. Kimse takip edilmez.',
@@ -239,6 +262,21 @@ const FRONT: Record<Lang, Front> = {
       'Your identity and bank account are checked before you start.',
     ],
     agentsCta: 'Apply to Emanet Saha',
+    devH: 'It talks to your systems',
+    devText:
+      'Add cases through the API and hear about deliveries by webhook. The OpenAPI document imports straight into Postman or your code generator.',
+    devCta: 'API reference',
+    trust: [
+      ['Only the police seize', 'An agent never touches the vehicle; they see it and call 112.'],
+      [
+        'Agents with a verified identity',
+        'Email, national ID number, a video call, and an IBAN in their own name.',
+      ],
+      [
+        'Data in the EU, under KVKK',
+        'Addresses show only during the search and are erased when the case closes.',
+      ],
+    ],
     rulesH: 'Our rules',
     rules: [
       'We look for vehicles, not people. Nobody is followed.',
@@ -278,28 +316,52 @@ export function front(lang: Lang, company: Company): string {
   </figure>
 </section>
 
+<section class="trust">
+  ${f.trust.map(([h, p], i) => `<div>${icon(TRUST_ICONS[i] ?? 'check')}<div><strong>${h}</strong><span>${p}</span></div></div>`).join('')}
+</section>
+
 <section class="how">
   <h2>${f.how}</h2>
   <ol>
-    ${f.howSteps.map(([h, p]) => `<li><h3>${h}</h3><p>${p}</p></li>`).join('')}
+    ${f.howSteps.map(([h, p], i) => `<li><span class="how-icon">${icon(HOW_ICONS[i] ?? 'check')}</span><h3>${h}</h3><p>${p}</p></li>`).join('')}
   </ol>
 </section>
 
 <section class="audiences">
   <div>
+    <span class="aud-icon">${icon('partners')}</span>
     <h2>${f.companiesH}</h2>
     <ul>${f.companies.map((x) => `<li>${x}</li>`).join('')}</ul>
     <p><a class="button" href="${KURUMSAL}">${f.companiesCta}</a></p>
   </div>
   <div>
+    <span class="aud-icon">${icon('agents')}</span>
     <h2>${f.agentsH}</h2>
     <ul>${f.agents.map((x) => `<li>${x}</li>`).join('')}</ul>
     <p><a class="button ghost" href="${SAHA}">${f.agentsCta}</a></p>
   </div>
 </section>
 
+<section class="dev">
+  <div>
+    <h2>${icon('code')} ${f.devH}</h2>
+    <p>${f.devText}</p>
+    <p><a class="button ghost" href="${KURUMSAL}/docs/api">${f.devCta}</a></p>
+  </div>
+  <pre translate="no" aria-hidden="true">POST /api/v1/cases
+{
+  "external_ref": "K-2026-0001",
+  "plate": "34 EMN 026",
+  "vin": "VF1RJA00061234567",
+  "icra_file_no": "2026/12345",
+  "legal_basis": "rehin"
+}
+
+→ webhook  case.delivered</pre>
+</section>
+
 <section class="rules">
-  <h2>${f.rulesH}</h2>
+  <div class="rules-head">${scene('shield')}<h2>${f.rulesH}</h2></div>
   <ul>${f.rules.map((x) => `<li>${x}</li>`).join('')}</ul>
 </section>
 

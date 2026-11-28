@@ -83,6 +83,7 @@ ${alt ? `<link rel="alternate" hreflang="${meta.lang}" href="${url}"><link rel="
   <nav aria-label="${t ? 'Uygulamalar' : 'Apps'}">
     <a href="${KURUMSAL}">${t ? 'Kurumlar' : 'Companies'}</a>
     <a href="${SAHA}">${t ? 'Saha görevlileri' : 'Field agents'}</a>
+    <a href="${t ? '/' : '/en'}#contact">${t ? 'İletişim' : 'Contact'}</a>
     ${alt ? `<a href="${alt.path}" hreflang="${alt.lang}" lang="${alt.lang}">${alt.lang === 'en' ? 'English' : 'Türkçe'}</a>` : ''}
   </nav>
 </header>
@@ -134,6 +135,13 @@ interface Front {
   devCta: string;
   trust: [string, string][];
   contact: string;
+  newCompany: string;
+  newCompanyCta: string;
+  newCompanySubject: string;
+  existing: string;
+  faqH: string;
+  faq: [string, string][];
+  contactNav: string;
 }
 
 const FRONT: Record<Lang, Front> = {
@@ -211,6 +219,40 @@ const FRONT: Record<Lang, Front> = {
       'Emanet bir kamu kurumu değildir ve icra işlemi yapmaz.',
     ],
     contact: 'Kurumunuzu Emanet’e almak veya sorularınız için',
+    newCompany:
+      'Emanet Kurumsal’a davetle girilir. Kurumunuzu tanıtın; sözleşmeyi ve fiyat listesini birlikte hazırlayalım, ekibinize davet gönderelim.',
+    newCompanyCta: 'Bize yazın',
+    newCompanySubject: 'Emanet Kurumsal hakkında',
+    existing:
+      'Zaten kullanıyor musunuz? Sorularınızı uygulamanın içinden, Emanet Kurumsal’da “Destek”, Emanet Saha’da “Yardım” bölümünden gönderin; yanıtı orada görürsünüz.',
+    faqH: 'Sık sorulanlar',
+    faq: [
+      [
+        'Ne kadar ödüyoruz?',
+        'Yalnızca yediemine teslim edilen araç için, sözleşmenizdeki fiyat listesine göre bir ücret. Ücret aracı eklediğiniz anda sabitlenir; bulunmayan, geri çektiğiniz ya da süresi dolan dosya için ücret yoktur.',
+      ],
+      [
+        'Aracı kim yakalıyor?',
+        'Yalnızca kolluk. Saha görevlisi aracı görür, fotoğraflar ve 112’yi arar. Araca dokunmaz, çekmez, borçluyla konuşmaz.',
+      ],
+      [
+        'Görevliler borçluyu görüyor mu?',
+        'Hayır. Görevli plakayı, aracı ve aranacak adresleri yalnızca aracı üstlendiği süre boyunca görür. Borçlunun adını ve borcunu hiç görmez; her adres görüntülemesi kaydedilir.',
+      ],
+      [
+        'Kimler saha görevlisi olabilir?',
+        '18 yaşını doldurmuş, T.C. kimlik numarası, kendi adına IBAN’ı ve e-Devlet’ten adli sicil kaydı ve nüfus kayıt örneği olan herkes başvurabilir. Başlamadan önce kısa bir görüntülü görüşme yapılır.',
+      ],
+      [
+        'Görevliye ödeme ne zaman yapılır?',
+        'Araç yediemine ulaşıp alacaklı ödemesini yaptıktan sonra, görevlinin kendi adına IBAN’ına. Her ödemenin özeti Emanet Saha’da görünür ve indirilebilir.',
+      ],
+      [
+        'Sistemlerimizle bağlantı kurabilir miyiz?',
+        'Evet. Dosyaları API veya CSV ile ekleyebilir, teslim ve diğer olayları webhook ile alabilirsiniz. Belgeler herkese açıktır.',
+      ],
+    ],
+    contactNav: 'İletişim',
   },
   en: {
     title: 'Emanet: vehicles under seizure orders, into custody by the police',
@@ -286,6 +328,40 @@ const FRONT: Record<Lang, Front> = {
       'Emanet is not a public authority and takes no enforcement action.',
     ],
     contact: 'To bring your company to Emanet, or with any question',
+    newCompany:
+      'Emanet Kurumsal is by invitation. Tell us about your company; we prepare the agreement and the price list with you and invite your team.',
+    newCompanyCta: 'Write to us',
+    newCompanySubject: 'About Emanet Kurumsal',
+    existing:
+      'Already using Emanet? Ask from inside the app, under Support in Emanet Kurumsal or Help in Emanet Saha; the answer appears there.',
+    faqH: 'Questions',
+    faq: [
+      [
+        'What do we pay?',
+        'A fee only for vehicles that reach a custodian car park, by the price list in your agreement. The fee is fixed when you add the vehicle; nothing is due for a case that is not found, that you withdraw or that expires.',
+      ],
+      [
+        'Who seizes the vehicle?',
+        'Only the police. A field agent sees the vehicle, takes a photo and calls 112. They never touch or tow it and never speak to the debtor.',
+      ],
+      [
+        'Do agents see the debtor?',
+        'No. An agent sees the plate, the vehicle and the places to look, only while they hold the vehicle. They never see the debtor’s name or debt, and every look at an address is recorded.',
+      ],
+      [
+        'Who can become a field agent?',
+        'Anyone 18 or older with a Turkish ID number, an IBAN in their own name, and a criminal record and a population register extract from e-Devlet. There is a short video call before they start.',
+      ],
+      [
+        'When is an agent paid?',
+        'After the vehicle reaches custody and the creditor has paid, to an IBAN in the agent’s own name. Each payment’s statement is in Emanet Saha and can be downloaded.',
+      ],
+      [
+        'Can it connect to our systems?',
+        'Yes. Add cases by API or CSV, and receive deliveries and other events by webhook. The reference is public.',
+      ],
+    ],
+    contactNav: 'Contact',
   },
 };
 
@@ -365,8 +441,24 @@ export function front(lang: Lang, company: Company): string {
   <ul>${f.rules.map((x) => `<li>${x}</li>`).join('')}</ul>
 </section>
 
-<section class="contact">
-  <p>${f.contact}: <a href="mailto:${CONTACT}">${CONTACT}</a></p>
+<section class="faq">
+  <h2>${f.faqH}</h2>
+  ${f.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}
+</section>
+
+<section class="contact" id="contact">
+  <h2>${f.contactNav}</h2>
+  <div class="contact-grid">
+    <div>
+      <h3>${f.companiesH}</h3>
+      <p>${f.newCompany}</p>
+      <p><a class="button" href="mailto:${CONTACT}?subject=${encodeURIComponent(f.newCompanySubject)}">${f.newCompanyCta}</a></p>
+    </div>
+    <div>
+      <p>${f.existing}</p>
+      <p>${f.contact}: <a href="mailto:${CONTACT}">${CONTACT}</a></p>
+    </div>
+  </div>
 </section>`;
   return layout(
     {

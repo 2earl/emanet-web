@@ -30,6 +30,11 @@ describe('emanet.dev', () => {
     const en = await (await get('/en')).text();
     expect(en).toContain('<html lang="en">');
     expect(en).toContain('Sign in to Emanet Kurumsal');
+    // A new company has a way in, and existing users are sent to support inside the apps.
+    expect(html).toContain('mailto:iletisim@emanet.dev?subject=');
+    expect(html).toContain('id="contact"');
+    expect(html).toContain('<details><summary>Ne kadar ödüyoruz?</summary>');
+    expect(en).toContain('under Support in Emanet Kurumsal or Help in Emanet Saha');
   });
 
   it('sets no cookie, runs no script and is safe to frame nowhere', async () => {
